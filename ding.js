@@ -12,6 +12,8 @@ fetch (`https://api.trello.com/1/boards/${board}/actions?key=${key}&token=${toke
 }
 }
 // näita ainult keywordiga liste
+// see fetchi hoopis https://api.trello.com/1/boards/${board}/actions?key=${key}&token=${token}&filter=list_name:${keyword}
+
 
 
 // uus kaart tehti, liigutati listi non-keyword listist?
