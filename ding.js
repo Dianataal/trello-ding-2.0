@@ -44,10 +44,10 @@ if (action.type === 'createCard') {
         }
       
     });
-
+// this doesn't work for some reason
     cards.forEach((card) => {
       card.actions.forEach((action) => {
-        const shortId = action.data.idShort;
+        const shortId = action.data.card.idShort;
         if (action.type === "deleteCard") {
           console.log(`A card with id ${shortId} was deleted from the board.`);
         }
