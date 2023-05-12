@@ -24,26 +24,25 @@ fetch(`https://api.trello.com/1/boards/${board}/actions?key=${key}&token=${token
     });
 
     data.forEach(action => {
-      const cardName = action.data.card ? action.data.card.name : '';
-      const prevList = action.data.listBefore ? action.data.listBefore.name : '';
-      const newList = action.data.listAfter ? action.data.listAfter.name : '';
-      if (action.type === 'createCard') {
-        console.log(`${cardName} was added to the list ${newList}.`);
-        // moving cards works!!!
-      } else if (action.type === 'updateCard' && newList.includes(keyword)) {
-        console.log(`${cardName} was moved from list ${prevList} to ${newList}.`);
-      } else if (action.type === 'updateCard' && !(newList.includes(keyword))) {
-      // prevList isnt showing up tho so it needs to be changed?
-        console.log(`${cardName} was removed from list ${prevList}.`);
-        // 
-      } else if (action.type === 'updateCard' && typeof action.closed !== 'undefined') {
-        const listName = action.data.list ? action.data.list.name : '';
-        if (action.closed === true) {
-          console.log(`${cardName} was archived from list ${listName}.`);
-        } else if (action.closed === false) {
-          console.log(`${cardName} was returned to list ${listName}.`);
+     const cardName = action.data.card ? action.data.card.name : '';
+const prevList = action.data.listBefore ? action.data.listBefore.name : '';
+const newList = action.data.listAfter ? action.data.listAfter.name : '';
+if (action.type === 'createCard') {
+  console.log(`${cardName} was added to the list ${newList}.`);
+  // moving cards works well enough
+} else if (action.type === 'updateCard' && newList.includes(keyword)) {
+  console.log(`${cardName} was moved from list ${prevList} to ${newList}.`);
+} else if (action.type === 'updateCard' && !(newList.includes(keyword))) {
+  console.log(`${cardName} was moved from ${prevList ? 'list ' + prevList : 'unknown list'} to a non-keyword list.`);
+        // archiving cards
+      } 
+    const listName = action.data.list ? action.data.list.name : '';
+    if (action.data.card.closed === true) {
+      console.log(`${cardName} was archived from list ${listName}.`);
+    } else if (action.data.card.closed === false) {
+      console.log(`${cardName} was returned from archive to list ${listName}.`);
         }
-      }
+      
     });
 
     cards.forEach((card) => {
@@ -55,7 +54,6 @@ fetch(`https://api.trello.com/1/boards/${board}/actions?key=${key}&token=${token
       });
     });
   });
-  // catch error is missing here?
-
+  
 // }
 // setInterval(checkChanges, 10000);
